@@ -87,9 +87,9 @@ public class SampleActivity extends Activity {
         mResultCardTypeImage = (ImageView) findViewById(R.id.result_card_type_image);
 
         TextView version = (TextView) findViewById(R.id.version);
-        version.setText("card.io library: " + CardIOActivity.sdkVersion() + "\n" +
+        version.setText("card.io library: \n" +
                 "Build date: " + CardIOActivity.sdkBuildDate());
-
+        System.out.println("CARDIOVERIFIER:::::" + CardIOActivity.canReadCardWithCamera());
         setScanExpiryEnabled();
         setupLanguageList();
     }
