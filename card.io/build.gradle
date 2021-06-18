@@ -4,6 +4,7 @@ apply plugin: 'signing'
 apply plugin: 'io.codearte.nexus-staging'
 
 repositories {
+    google()
     mavenCentral()
 }
 
