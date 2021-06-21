@@ -4,7 +4,7 @@
 
 #LIBCXX rebuild was needed once when using APP_STL := c++_static
 APP_CPPFLAGS += -std=c++11 -frtti -fexceptions -DANDROID_DMZ=1 -Wno-c++11-narrowing
-APP_STL := c++_static
+APP_STL := c++_shared
 #Also the gnu compiler can be used
 #APP_STL:= gnustl_static
 APP_ABI := all

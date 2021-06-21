@@ -14,20 +14,14 @@ LOCAL_DMZ_DIR := card.io-dmz
 ifneq (,$(filter $(TARGET_ARCH_ABI),armeabi-v7a x86 arm64-v8a x86_64))
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := tbb.so
-LOCAL_SRC_FILES := lib/$(TARGET_ARCH_ABI)/libtbb.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := opencv_core
 LOCAL_SRC_FILES := lib/$(TARGET_ARCH_ABI)/libopencv_core.so
-LOCAL_SHARED_LIBRARIES := tbb
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := opencv_imgproc
 LOCAL_SRC_FILES := lib/$(TARGET_ARCH_ABI)/libopencv_imgproc.so
-LOCAL_SHARED_LIBRARIES := opencv_core tbb
+LOCAL_SHARED_LIBRARIES := opencv_core
 include $(PREBUILT_SHARED_LIBRARY)
 
 endif

@@ -42,6 +42,7 @@ for ARCH in "armeabi-v7a" "x86" "arm64-v8a" "x86_64"
 do
 	DEST_DIR="../card.io/src/main/jni/lib/"$ARCH
 	echo "---- Copying $ARCH files ----"
+	mkdir -p $DEST_DIR
 	cp $GENERATED_SDK_PATH/$ARCH/libopencv_core.so $DEST_DIR
 	cp $GENERATED_SDK_PATH/$ARCH/libopencv_imgproc.so $DEST_DIR
 done

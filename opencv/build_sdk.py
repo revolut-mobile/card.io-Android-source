@@ -220,7 +220,7 @@ class Builder:
             INSTALL_CREATE_DISTRIB="ON",
             WITH_OPENCL="OFF",
             WITH_IPP=("ON" if abi.haveIPP() else "OFF"),
-            WITH_TBB="ON",
+            WITH_TBB="OFF",
             BUILD_EXAMPLES="OFF",
             BUILD_TESTS="OFF",
             BUILD_PERF_TESTS="OFF",
@@ -256,6 +256,7 @@ class Builder:
         cmd.append("-DBUILD_SHARED_LIBS=ON")
         cmd.append("-DBUILD_opencv_world=OFF")
         cmd.append("-DWITH_IPP=OFF")
+
 
         cmake_vars.update(abi.cmake_vars)
         cmd += [ "-D%s='%s'" % (k, v) for (k, v) in cmake_vars.items() if v is not None]
