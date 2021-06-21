@@ -296,7 +296,7 @@ void setDetectedCardImage(JNIEnv* env, jobject jCardResultBitmap,
     cvSetData(cardResult, pixels, bmInfo.stride);
     dmz_YCbCr_to_RGB(cardY, bigCb, bigCr, &cardResult);
 
-    dmz_blur_card(cardResult, &scannerState, unblurDigits);
+    //dmz_blur_card(cardResult, &scannerState, unblurDigits);
 
     AndroidBitmap_unlockPixels(env, jCardResultBitmap);
 

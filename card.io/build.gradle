@@ -11,6 +11,7 @@ repositories {
 android {
     compileSdkVersion rootProject.ext.sdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+//    ndkVersion rootProject.ext.ndkVersion
 
     defaultConfig {
         minSdkVersion 16
@@ -28,10 +29,16 @@ android {
     resourcePrefix 'cio_'
 
     externalNativeBuild {
+
         ndkBuild {
             path 'src/main/jni/Android.mk'
         }
     }
+
+//    sourceSets.main {
+//        jniLibs.srcDir 'src/main/libs' // mention your JNI lib path(where ".so" files contains)
+//        jni.srcDirs = [] //disable automatic ndk-build call
+//    }
 }
 
 dependencies {
