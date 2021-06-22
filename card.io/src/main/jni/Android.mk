@@ -50,6 +50,7 @@ endif
 
 ifneq (,$(filter $(TARGET_ARCH_ABI), arm64-v8a x86_64))
 LOCAL_CFLAGS += -DANDROID_HAS_NEON=0 ## 64-bit changed register names - requires asm fixes
+LOCAL_ARM_NEON := false
 endif
 
 include $(BUILD_SHARED_LIBRARY)
