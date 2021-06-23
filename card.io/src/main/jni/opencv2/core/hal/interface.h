@@ -35,7 +35,7 @@
 #    ifdef __NEWLIB__
         typedef unsigned int uint;
 #    else
-        typedef uint32_t uint;
+        typedef std::uint32_t uint;
 #    endif
 #  else
 #    include <stdint.h>

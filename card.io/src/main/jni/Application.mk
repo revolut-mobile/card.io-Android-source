@@ -3,7 +3,7 @@
 # See the file "LICENSE.md" for the full license governing this code.
 
 APP_CPPFLAGS += -std=c++11 -frtti -fexceptions -DANDROID_DMZ=1 -Wno-c++11-narrowing
-APP_STL := c++_shared
+APP_STL := c++_static
 APP_ABI := all
 NDK_TOOLCHAIN_VERSION := 4.8
 APP_CFLAGS += -O3 -Wno-error=format-security

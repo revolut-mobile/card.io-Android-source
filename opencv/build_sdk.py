@@ -123,7 +123,7 @@ class ABI:
         self.name = name # general name (official Android ABI identifier)
         self.toolchain = toolchain # toolchain identifier (for cmake)
         self.cmake_vars = dict(
-            ANDROID_STL="gnustl_static",
+            ANDROID_STL="c++_static",
             ANDROID_ABI=self.name,
             ANDROID_PLATFORM_ID=platform_id,
         )
@@ -131,7 +131,7 @@ class ABI:
             self.cmake_vars['ANDROID_TOOLCHAIN_NAME'] = toolchain
         else:
             self.cmake_vars['ANDROID_TOOLCHAIN'] = 'clang'
-            self.cmake_vars['ANDROID_STL'] = 'c++_shared'
+            self.cmake_vars['ANDROID_STL'] = 'c++_static'
         if ndk_api_level:
             self.cmake_vars['ANDROID_NATIVE_API_LEVEL'] = ndk_api_level
         self.cmake_vars.update(cmake_vars)
@@ -216,7 +216,7 @@ class Builder:
     def build_library(self, abi, do_install):
         cmd = [self.cmake_path, "-GNinja"]
         cmake_vars = dict(
-            CMAKE_TOOLCHAIN_FILE="/Users/ilnar.karimov/Library/Android/sdk/ndk/16.1.4479499/build/cmake/android.toolchain.cmake",
+            CMAKE_TOOLCHAIN_FILE=os.environ["ANDROID_NDK"] + "/build/cmake/android.toolchain.cmake",
             INSTALL_CREATE_DISTRIB="ON",
             WITH_OPENCL="OFF",
             WITH_IPP=("ON" if abi.haveIPP() else "OFF"),
