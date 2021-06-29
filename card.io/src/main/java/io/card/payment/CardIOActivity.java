@@ -686,15 +686,6 @@ public final class CardIOActivity extends Activity {
     }
 
     /**
-     * Returns the String version of this SDK.  Please include the return value of this method in any support requests.
-     *
-     * @return The String version of this SDK
-     */
-    public static String sdkVersion() {
-        return BuildConfig.VERSION_NAME;
-    }
-
-    /**
      * @deprecated Always returns {@code new Date()}.
      */
     @Deprecated

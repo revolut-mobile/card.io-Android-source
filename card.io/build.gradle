@@ -4,18 +4,21 @@ apply plugin: 'signing'
 apply plugin: 'io.codearte.nexus-staging'
 
 repositories {
+    google()
     mavenCentral()
 }
 
 android {
     compileSdkVersion rootProject.ext.sdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    ndkVersion rootProject.ext.ndkVersion
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion rootProject.ext.sdkVersion
 
         ndk {
+            abiFilters 'armeabi-v7a','arm64-v8a'
             moduleName "cardioRecognizer"
         }
 
