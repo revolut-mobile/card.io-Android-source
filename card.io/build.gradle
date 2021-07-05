@@ -18,9 +18,15 @@ android {
         targetSdkVersion rootProject.ext.sdkVersion
 
         ndk {
-            abiFilters 'armeabi-v7a','arm64-v8a'
+            abiFilters 'armeabi-v7a','arm64-v8a','x86_64'
             moduleName "cardioRecognizer"
         }
+        externalNativeBuild {
+            ndkBuild {
+                arguments "USE_WHOLE_OPENCV=" + rootProject.ext.useWholeOpenCV
+            }
+        }
+        buildConfigField("Boolean", "USE_WHOLE_OPENCE", "${rootProject.ext.useWholeOpenCV}")
 
         consumerProguardFiles 'proguard.cfg'
 
@@ -33,6 +39,10 @@ android {
         ndkBuild {
             path 'src/main/jni/Android.mk'
         }
+    }
+
+    packagingOptions {
+        exclude '**/libopencv_java4.so'
     }
 }
 
