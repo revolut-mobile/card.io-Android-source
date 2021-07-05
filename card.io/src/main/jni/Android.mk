@@ -13,6 +13,16 @@ LOCAL_DMZ_DIR := card.io-dmz
 # --- declare opencv prebuilt static libs ---------------------------------
 ifneq (,$(filter $(TARGET_ARCH_ABI),armeabi-v7a x86 arm64-v8a x86_64))
 
+ifeq ($(USE_WHOLE_OPENCV),true)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libopencv_java4
+LOCAL_SRC_FILES := lib/$(TARGET_ARCH_ABI)/libopencv_java4.so
+LOCAL_SHARED_LIBRARIES := libopencv_java4
+include $(PREBUILT_SHARED_LIBRARY)
+
+else
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := opencv_core
 LOCAL_SRC_FILES := lib/$(TARGET_ARCH_ABI)/libopencv_core.so
@@ -24,7 +34,9 @@ LOCAL_SRC_FILES := lib/$(TARGET_ARCH_ABI)/libopencv_imgproc.so
 LOCAL_SHARED_LIBRARIES := opencv_core
 include $(PREBUILT_SHARED_LIBRARY)
 
-endif
+endif #USE_WHOLE_OPENCV
+
+endif #TARGET_ARCH_ABI
 
 # --- libcardioRecognizer.so --------------------------------------------------------
 # (neon version)
@@ -36,7 +48,11 @@ ifneq (,$(filter $(TARGET_ARCH_ABI),armeabi-v7a x86 arm64-v8a x86_64))
 
 LOCAL_MODULE := cardioRecognizer
 LOCAL_LDLIBS := -llog -L$(SYSROOT)/usr/lib -lz -ljnigraphics
+ifeq ($(USE_WHOLE_OPENCV),true)
+LOCAL_SHARED_LIBRARIES := cpufeatures libopencv_java4
+else
 LOCAL_SHARED_LIBRARIES := cpufeatures opencv_imgproc opencv_core
+endif
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(LOCAL_DMZ_DIR) $(LOCAL_PATH)/$(LOCAL_DMZ_DIR)/cv
 LOCAL_SRC_FILES := $(LOCAL_DMZ_DIR)/dmz_all.cpp nativeRecognizer.cpp
@@ -68,7 +84,11 @@ ifneq (,$(filter $(TARGET_ARCH_ABI),armeabi-v7a x86 arm64-v8a x86_64))
 
 LOCAL_MODULE := cardioRecognizer_tegra2
 LOCAL_LDLIBS := -llog -L$(SYSROOT)/usr/lib -lz -ljnigraphics
+ifeq ($(USE_WHOLE_OPENCV),true)
+LOCAL_SHARED_LIBRARIES := cpufeatures libopencv_java4
+else
 LOCAL_SHARED_LIBRARIES := cpufeatures opencv_imgproc opencv_core
+endif
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(LOCAL_DMZ_DIR) $(LOCAL_PATH)/$(LOCAL_DMZ_DIR)/cv
 LOCAL_SRC_FILES := $(LOCAL_DMZ_DIR)/dmz_all.cpp nativeRecognizer.cpp

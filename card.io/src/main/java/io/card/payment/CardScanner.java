@@ -126,10 +126,15 @@ class CardScanner implements Camera.PreviewCallback, Camera.AutoFocusCallback,
             Log.d(Util.PUBLIC_LOG_TAG, "    nUseX86():  " + nUseX86());
 
             if (usesSupportedProcessorArch()) {
-                loadLibrary("opencv_core");
-                Log.d(Util.PUBLIC_LOG_TAG, "Loaded opencv core library");
-                loadLibrary("opencv_imgproc");
-                Log.d(Util.PUBLIC_LOG_TAG, "Loaded opencv imgproc library");
+                if (BuildConfig.USE_WHOLE_OPENCE) {
+                    loadLibrary("opencv_java4");
+                    Log.d(Util.PUBLIC_LOG_TAG, "Loaded whole opencv library");
+                } else {
+                    loadLibrary("opencv_core");
+                    Log.d(Util.PUBLIC_LOG_TAG, "Loaded opencv core library");
+                    loadLibrary("opencv_imgproc");
+                    Log.d(Util.PUBLIC_LOG_TAG, "Loaded opencv imgproc library");
+                }
             }
             if (nUseNeon()) {
                 loadLibrary("cardioRecognizer");
@@ -155,13 +160,14 @@ class CardScanner implements Camera.PreviewCallback, Camera.AutoFocusCallback,
     /**
      * Custom loadLibrary method that first tries to load the libraries from the built-in libs
      * directory and if it fails, tries to use the alternative libs path if one is set.
-     *
+     * <p>
      * No checks are performed to ensure that the native libraries match the cardIO library version.
      * This needs to be handled by the consuming application.
      */
     private static void loadLibrary(String libraryName) throws UnsatisfiedLinkError {
         try {
             System.loadLibrary(libraryName);
+            Log.d(Util.PUBLIC_LOG_TAG, "loaded library: " + libraryName);
         } catch (UnsatisfiedLinkError e) {
             String altLibsPath = CardIONativeLibsConfig.getAlternativeLibsPath();
             if (altLibsPath == null || altLibsPath.length() == 0) {
@@ -172,7 +178,7 @@ class CardScanner implements Camera.PreviewCallback, Camera.AutoFocusCallback,
             }
             String fullPath = altLibsPath + Build.CPU_ABI + File.separator +
                     System.mapLibraryName(libraryName);
-            Log.d(Util.PUBLIC_LOG_TAG, "loadLibrary failed for library " + libraryName + ". Trying " + fullPath);
+            Log.e(Util.PUBLIC_LOG_TAG, "loadLibrary failed for library " + libraryName + ". Trying " + fullPath);
             // If we couldn't find the library in the normal places and we have an additional
             // search path, try loading from there.
             System.load(fullPath);
@@ -395,7 +401,8 @@ class CardScanner implements Camera.PreviewCallback, Camera.AutoFocusCallback,
      * int, int)
      */
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    }
 
     /*
      * @see android.view.SurfaceHolder.Callback#surfaceDestroyed(android.view. SurfaceHolder)
